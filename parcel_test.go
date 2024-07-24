@@ -93,7 +93,7 @@ func TestSetAddress(t *testing.T) {
 	// получите добавленную посылку и убедитесь, что адрес обновился
 	newParcel, err := store.Get(newId)
 	require.NoError(t, err)
-	assert.Equal(t, newAddress, newParcel.Address)
+	assert.ErrorIs(t, err, sql.ErrNoRows)
 }
 
 // TestSetStatus проверяет обновление статуса
