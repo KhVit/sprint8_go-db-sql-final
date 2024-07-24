@@ -62,7 +62,8 @@ func TestAddGetDelete(t *testing.T) {
 	err = store.Delete(newId)
 	require.NoError(t, err)
 	_, err = store.Get(newId)
-	assert.Equal(t, sql.ErrNoRows, err)
+	//assert.Equal(t, sql.ErrNoRows, err)
+	assert.ErrorIs(t, err, sql.ErrNoRows)
 }
 
 // TestSetAddress проверяет обновление адреса
@@ -90,10 +91,9 @@ func TestSetAddress(t *testing.T) {
 
 	// check
 	// получите добавленную посылку и убедитесь, что адрес обновился
-	_, err = store.Get(newId)
+	newParcel, err := store.Get(newId)
 	require.NoError(t, err)
-	//assert.Equal(t, newAddress, newParcel.Address)
-	assert.ErrorIs(t, err, sql.ErrNoRows)
+	assert.Equal(t, newAddress, newParcel.Address)
 }
 
 // TestSetStatus проверяет обновление статуса
